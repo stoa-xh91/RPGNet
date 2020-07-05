@@ -56,3 +56,19 @@ MODEL_EXTRAS = {
     'pose_resnet': POSE_RESNET,
     'pose_high_resolution_net': POSE_HIGH_RESOLUTION_NET,
 }
+def get_model_name(cfg):
+    name = cfg.MODEL.NAME
+    full_name = cfg.MODEL.NAME
+    extra = cfg.MODEL.EXTRA
+    if name in ['pose_resnet','pose_hrnet','pose_hourglass',"dp_hrnet"]:
+        name = '{model}'.format(
+            model=name)
+
+        full_name = '{height}x{width}_{name}'.format(
+            height=cfg.MODEL.IMAGE_SIZE[1],
+            width=cfg.MODEL.IMAGE_SIZE[0],
+            name=name)
+    else:
+        raise ValueError('Unkown model: {}'.format(cfg.MODEL))
+
+    return name, full_name

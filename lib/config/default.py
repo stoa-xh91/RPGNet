@@ -1,10 +1,3 @@
-
-# ------------------------------------------------------------------------------
-# Copyright (c) Microsoft
-# Licensed under the MIT License.
-# Written by Bin Xiao (Bin.Xiao@microsoft.com)
-# ------------------------------------------------------------------------------
-
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -35,6 +28,7 @@ _C.CUDNN.ENABLED = True
 # common params for NETWORK
 _C.MODEL = CN()
 _C.MODEL.NAME = 'pose_hrnet'
+_C.MODEL.POSE_NAME = 'PoseHighResolutionNet'
 _C.MODEL.INIT_WEIGHTS = True
 _C.MODEL.PRETRAINED = ''
 _C.MODEL.NUM_JOINTS = 17
@@ -44,6 +38,8 @@ _C.MODEL.IMAGE_SIZE = [256, 256]  # width * height, ex: 192 * 256
 _C.MODEL.HEATMAP_SIZE = [64, 64]  # width * height, ex: 24 * 32
 _C.MODEL.SIGMA = 2
 _C.MODEL.EXTRA = CN(new_allowed=True)
+_C.MODEL.POSE_RELATION = CN(new_allowed=True)
+_C.MODEL.PHASE = 'train'
 
 _C.LOSS = CN()
 _C.LOSS.USE_OHKM = False
@@ -57,6 +53,7 @@ _C.DATASET.ROOT = ''
 _C.DATASET.DATASET = 'mpii'
 _C.DATASET.TRAIN_SET = 'train'
 _C.DATASET.TEST_SET = 'valid'
+_C.DATASET.VAL_SET = 'valid'
 _C.DATASET.DATA_FORMAT = 'jpg'
 _C.DATASET.HYBRID_JOINTS_TYPE = ''
 _C.DATASET.SELECT_DATA = False
@@ -113,6 +110,7 @@ _C.TEST.IN_VIS_THRE = 0.0
 _C.TEST.COCO_BBOX_FILE = ''
 _C.TEST.BBOX_THRE = 1.0
 _C.TEST.MODEL_FILE = ''
+_C.TEST.EVAL_DATA_DIR = ''
 
 # debug
 _C.DEBUG = CN()
