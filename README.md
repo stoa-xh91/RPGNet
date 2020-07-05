@@ -42,13 +42,13 @@ Download and extract them under ./data.
 Download and extract them under ./data.
 
 # Training and Testing
-- Download pretrained models ([Baidu](https://pan.baidu.com/s/1OyuimZ4Xd6rtC3iD4SbyZQ).)
+- Download pretrained models ([MODEL_ZOO](https://github.com/stoa-xh91/RPGNet/blob/master/model_zoo.txt).)
 - Training
 ```
 CUDA_VISIBLE_DEVICES=0,1,2,3 python tools/rl_train.py \
 --cfg experiments/crowdpose/hrnet/rpgnet_w32_256x192_adam_lr1e-3.yaml \
 ```
-- Testing on CrowdPose dataset using provided models([Baidu](https://pan.baidu.com/s/1OyuimZ4Xd6rtC3iD4SbyZQ).)
+- Testing on CrowdPose dataset using provided models([MODEL_ZOO](https://github.com/stoa-xh91/RPGNet/blob/master/model_zoo.txt).)
 ```
 CUDA_VISIBLE_DEVICES=0,1,2,3 python tools/rl_test.py \
 --cfg experiments/crowdpose/hrnet/rpgnet_w32_256x192_adam_lr1e-3.yaml \
