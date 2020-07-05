@@ -10,8 +10,8 @@ from __future__ import print_function
 
 import torch
 import torch.nn as nn
-
-
+import logging
+logger = logging.getLogger(__name__)
 class JointsMSELoss(nn.Module):
     def __init__(self, use_target_weight):
         super(JointsMSELoss, self).__init__()

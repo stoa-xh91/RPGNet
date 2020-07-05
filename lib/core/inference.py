@@ -13,7 +13,7 @@ import math
 import numpy as np
 
 from utils.transforms import transform_preds
-
+import cv2
 
 def get_max_preds(batch_heatmaps):
     '''
@@ -77,3 +77,55 @@ def get_final_preds(config, batch_heatmaps, center, scale):
         )
 
     return preds, maxvals
+
+
+def _extract_points_from_heatmaps(heatmaps, tag_maps, thresh=0.95):
+    points_all = []
+    for _, heatmaps_per_bbox, tags_per_bbox in enumerate(zip(heatmaps, tag_maps)):
+        points = []
+        for i in range(len(heatmaps_per_bbox)):
+            locs = np.where(heatmaps_per_bbox[i] >= thresh)
+            if len(locs[0])==0:
+                locs = np.where(heatmaps_per_bbox[i] >= heatmaps_per_bbox[i].max())
+            scores = heatmaps_per_bbox[i][locs]
+            tag_values = tags_per_bbox[locs]
+            locs = np.asarray(locs).transpose()
+            ind = np.argsort(scores)[::-1]
+            scores = scores[ind]
+            tag_values = tag_values[ind]
+            locs = locs[ind]
+            dist = compute_points_dist(locs)
+            remove_tags = np.zeros((len(scores)))
+            target_points = []
+            for j in range(len(scores)):
+                if remove_tags[j] == 1:
+                    continue
+                target_points += [locs[j, 0], locs[j, 1], i, scores[j], tag_values[j]]
+                current_score = scores[j]
+                remove_cands = dist[j].flatten()
+                remove_targets = np.logical_and(remove_cands < 3, scores <= current_score)
+                remove_targets[j] = 0
+                remove_tags[remove_targets] = 1
+            points.append(np.asarray(target_points).reshape((-1,5)))
+        target_points_per_person = []
+
+        for i in range(len(points)):
+
+            tags_per_person = np.asarray(tags_per_person)
+
+
+        if len(points)>0:
+            points_all.append(points)
+        else:
+            points_all.append([])
+    return points_all
+
+def compute_points_dist(points):
+    loc_x = points[:,0].reshape((-1,1))
+    loc_y = points[:,1].reshape((-1,1))
+    dx = (loc_x[:,None] - loc_x)**2
+    dy = (loc_y[:,None] - loc_y)**2
+    dist = np.sqrt(dx + dy)
+    return dist
+
+
