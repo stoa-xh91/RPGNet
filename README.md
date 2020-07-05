@@ -4,7 +4,7 @@
 This is the implementation of RPGNet: Relation based Pose Graph Network for Crowded Scenes Pose Estimation. In this work, we focus on two main problems: 1) how to remove the joints-of-interference from a given person proposal; and 2) how to infer the ambiguous joints. To tackle these problems, we propose a new pipeline named Relation based Pose Graph Network (RPGNet). Unlike existing works that directly predict joints-of-target by labeling joints-ofinterference as false positive, we encourage all joints to be predicted and model their relation through a multi-joints relation parser (MRP) for joints-of-interference removal. This new pipeline will largely relieve the confusion of the joints estimation model when seeing identical joints with totally distinct labels (e.g., the identical hand exists in two bounding boxes). Furthermore, human beings can well estimate the joints with ambiguity by looking at the surrounding regions. For example, human can easily infer the location of ‘neck’ after seeing ‘head’ and ‘shoulder’. Inspired by this, we propose a joints refinement machine (JRM) with commonsense knowledge to refine pose estimation results for handling ambiguous joints. 
 ![](https://github.com/stoa-xh91/RPGNet/blob/master/visualization/RPGNet.jpg)
 # Main Results on CrowdPose test set
-![](https://github.com/stoa-xh91/RPGNet/blob/master/visualization/main_results.jpg)
+![](https://github.com/stoa-xh91/RPGNet/blob/master/visualization/main_results.png)
 # Environment
 The code is developed based on the [HRNet project](https://github.com/leoxiaobin/deep-high-resolution-net.pytorch). NVIDIA GPUs are needed. The code is developed and tested using 4 NVIDIA RTX GPU cards. Other platforms or GPU cards are not fully tested.
 # Installation
@@ -42,13 +42,13 @@ Download and extract them under ./data.
 Download and extract them under ./data.
 
 # Training and Testing
-- Download pretrained models ([Baidu](https://pan.baidu.com/s/1OyuimZ4Xd6rtC3iD4SbyZQ). Extraction Code:fccy)
+- Download pretrained models ([Baidu](https://pan.baidu.com/s/1OyuimZ4Xd6rtC3iD4SbyZQ).)
 - Training
 ```
 CUDA_VISIBLE_DEVICES=0,1,2,3 python tools/rl_train.py \
 --cfg experiments/crowdpose/hrnet/rpgnet_w32_256x192_adam_lr1e-3.yaml \
 ```
-- Testing on CrowdPose dataset using provided models([Baidu](https://pan.baidu.com/s/1OyuimZ4Xd6rtC3iD4SbyZQ). Extraction Code:fccy)
+- Testing on CrowdPose dataset using provided models([Baidu](https://pan.baidu.com/s/1OyuimZ4Xd6rtC3iD4SbyZQ).)
 ```
 CUDA_VISIBLE_DEVICES=0,1,2,3 python tools/rl_test.py \
 --cfg experiments/crowdpose/hrnet/rpgnet_w32_256x192_adam_lr1e-3.yaml \
